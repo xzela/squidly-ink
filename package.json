@@ -1,0 +1,22 @@
+{
+  "name": "that-squid-thing",
+  "version": "0.0.1",
+  "description": "a location based web app to rack that squid thing",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xzela/that-squid-thing.git"
+  },
+  "author": "Zeph LaFassett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xzela/that-squid-thing/issues"
+  },
+  "homepage": "https://github.com/xzela/that-squid-thing",
+  "dependencies": {
+    "express": "^4.4.4"
+  }
+}
