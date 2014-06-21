@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/xzela/that-squid-thing",
   "dependencies": {
-    "express": "^4.4.4"
+    "express": "^4.4.4",
+    "jade": "^1.3.1"
   }
 }
