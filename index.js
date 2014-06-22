@@ -1,5 +1,6 @@
 var express = require('express'),
 	fs = require('fs'),
+	config = require('./config/config.json'),
 	path = require('path'),
 	multiparty = require('multiparty');
 
@@ -16,6 +17,9 @@ app.get('/upload', function (req, res) {
 	res.render('upload', {});
 });
 
+app.get('/map', function (req, res) {
+	res.render('map', {apiKey: config.google.maps.key});
+});
 
 app.post('/upload', function (req, res) {
 	var form = new multiparty.Form();

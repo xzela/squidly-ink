@@ -1,0 +1,38 @@
+doctype html
+link(rel="stylesheet", href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css")
+style(type="text/css").
+	html { height: 100% }
+	body { height: 100%; margin: 0; padding: 0 }
+	#map-canvas { height: 100% }
+
+h1 map
+
+input(onclick="javascritp:init()", type="button", value="get init")
+
+#map-canvas
+
+
+
+script(src="https://maps.googleapis.com/maps/api/js?key=#{apiKey}")
+script(type="text/javascript").
+	function init() {
+
+		function _success(pos) {
+			console.dir(pos);
+		}
+
+		function _err(err) {
+			console.log(err);
+		}
+
+		navigator.geolocation.getCurrentPosition(_success, _err);
+
+	}
+	function initialize() {
+		var mapOptions = {
+			center: new google.maps.LatLng(37.7920233, -122.27222179999998),
+			zoom: 18
+		};
+		var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
