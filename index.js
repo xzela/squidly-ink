@@ -2,12 +2,14 @@ var express = require('express'),
 	fs = require('fs'),
 	config = require('./config/config.json'),
 	path = require('path'),
+	serveStatic = require('serve-static'),
 	multiparty = require('multiparty');
 
 var app = express();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.use(serveStatic(path.join(__dirname, '/views/static')));
 
 app.get('/', function (req, res) {
 	res.render('index', {});
