@@ -1,39 +1,42 @@
-doctype html
-link(rel="stylesheet", href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css")
-style(type="text/css").
-	html { height: 100% }
-	body { height: 100%; margin: 0; padding: 0 }
-	#map-canvas { height: 100% }
+extends layout
 
-h1 map
+block content
 
-input(onclick="javascritp:init()", type="button", value="get init")
-
-#map-canvas
-
-
-
-script(src="https://maps.googleapis.com/maps/api/js?key=#{apiKey}")
-script(type="text/javascript").
-	function init() {
-
-		function _success(pos) {
-			var myLat = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-			console.dir(pos);
-			var mapOptions = {
-				center: myLat,
-				zoom: 18
-			};
-			var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-			var marker = new google.maps.Marker({
-				position: myLat,
-				map: map,
-				title:"Hello World!"
-			});
+	style(type="text/css").
+		#map-canvas {
+			height: 300px;
 		}
-		function _err(err) {
-			console.log(err);
+
+	div.container
+		div.jumbotron
+			h1 Map
+
+		input(onclick="javascritp:init()", type="button", value="get init")
+
+		div(id="map-canvas" class="map jumbotron")
+
+
+	script(src="https://maps.googleapis.com/maps/api/js?key=#{apiKey}")
+	script(type="text/javascript").
+		function init() {
+
+			function _success(pos) {
+				var myLat = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+				console.dir(pos);
+				var mapOptions = {
+					center: myLat,
+					zoom: 18
+				};
+				var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+				var marker = new google.maps.Marker({
+					position: myLat,
+					map: map,
+					title:"Hello World!"
+				});
+			}
+			function _err(err) {
+				console.log(err);
+			}
+			navigator.geolocation.getCurrentPosition(_success, _err);
 		}
-		navigator.geolocation.getCurrentPosition(_success, _err);
-	}
-	google.maps.event.addDomListener(window, 'load', init);
+		google.maps.event.addDomListener(window, 'load', init);
