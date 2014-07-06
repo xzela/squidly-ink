@@ -6,7 +6,10 @@ module.exports = function (router) {
 	}
 
 	router
-		.get('/', _index);
+		.get('/', _index)
+	;
+
+	router = require('./sightings')(router);
 
 	// upload routes
 	router = require('./upload')(router);
