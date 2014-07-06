@@ -19,9 +19,11 @@
   "dependencies": {
     "exif": "^0.4.0",
     "express": "4.4.x",
+    "gm": "^1.16.0",
     "jade": "1.3.x",
     "mongoose": "^3.8.12",
     "multiparty": "3.2.x",
+    "node-uuid": "^1.4.1",
     "serve-static": "^1.2.3"
   }
 }
