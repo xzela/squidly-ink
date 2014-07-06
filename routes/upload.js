@@ -4,6 +4,7 @@ var exif = require('exif'),
 	config = require('../config/config.json'),
 	absoluteUploadPath = require('../config/absolute-path.json'),
 	Sighting = require('../schemas/sighting'),
+	uuid = require('node-uuid'),
 	multiparty = require('multiparty');
 
 module.exports = function (router) {
@@ -37,8 +38,9 @@ module.exports = function (router) {
 			});
 
 			form.on("file", function (name, file) {
+				var ext = file.originalFilename.slice(file.originalFilename.lastIndexOf('.') + 1).toLowerCase();
 				console.log("uploading file....");
-				var new_file = path.join(dest, file.originalFilename);
+				var new_file = path.join(dest, uuid.v1() + '.' + ext);
 				fs.rename(file.path, new_file, function (err) {
 					if (err) {
 						throw err;
