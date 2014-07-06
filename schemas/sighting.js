@@ -12,6 +12,7 @@ db.on("error", function (err) {
 });
 
 sightingSchema = new Schema({
+	imageRelPath: String,
 	imageFilePath: String,
 	date: {type: Date, default: Date.now },
 	location: {

@@ -20,8 +20,14 @@ block content
 	script(type="text/javascript").
 		function init() {
 
+			var contentString = "<div><img src='#{data.imageRelPath}' width='100px' height='100px' /> </div>";
+			var infowindow = new google.maps.InfoWindow({
+					content: contentString
+				});
+
 			function _success(pos) {
-				var myLat = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+				// var myLat = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+				var myLat = new google.maps.LatLng(#{data.location.latitude}, #{data.location.longitude});
 				console.dir(pos);
 				var mapOptions = {
 					center: myLat,
@@ -31,7 +37,10 @@ block content
 				var marker = new google.maps.Marker({
 					position: myLat,
 					map: map,
-					title:"Hello World!"
+					title: "Hello World!"
+				});
+				google.maps.event.addListener(marker, 'click', function () {
+					infowindow.open(map, marker);
 				});
 			}
 			function _err(err) {

@@ -61,6 +61,7 @@ module.exports = function (router) {
 							console.log('GPSLongitude', lon);
 
 							var sight = new Sighting({
+								imageRelPath: path.join('img', file.originalFilename),
 								imageFilePath: new_file,
 								location: {
 									latitude: lat,
