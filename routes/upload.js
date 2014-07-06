@@ -3,6 +3,7 @@ var exif = require('exif'),
 	path = require('path'),
 	config = require('../config/config.json'),
 	absoluteUploadPath = require('../config/absolute-path.json'),
+	Sighting = require('../schemas/sighting'),
 	multiparty = require('multiparty');
 
 module.exports = function (router) {
@@ -58,6 +59,20 @@ module.exports = function (router) {
 							}
 							console.log('GPSLatitude', lat);
 							console.log('GPSLongitude', lon);
+
+							var sight = new Sighting({
+								imageFilePath: new_file,
+								location: {
+									latitude: lat,
+									longitude: lon
+								}
+							});
+							sight.save(function (err, data) {
+								if (err) {
+									throw err;
+								}
+								// response.json(sight);
+							});
 						} else {
 							console.log("couldn't locate GPS data from image");
 						}

@@ -1,15 +1,6 @@
-var mongoose = require('mongoose'),
-	sighting = require('../schemas/sighting');
-
-mongoose.connect('mongodb://localhost/squid');
+var Sighting = require('../schemas/sighting');
 
 module.exports = function (router) {
-
-	var db = mongoose.connection;
-	var Sighting = mongoose.model('Sighting', sighting);
-	db.on("error", function (err) {
-		throw err;
-	});
 
 	function _save(request, response) {
 		var sight = new Sighting({
@@ -27,15 +18,24 @@ module.exports = function (router) {
 	}
 
 	function _sighting(request, response) {
-		Sighting.find({}, function (err, data) {
-			response.json({
-				data: data
+		if (request.params.id) {
+			Sighting.find({_id: request.params.id}, function (err, data) {
+				response.json({
+					data: data
+				});
 			});
-		});
+		} else {
+			Sighting.find({}, function (err, data) {
+				response.json({
+					data: data
+				});
+			});
+		}
 	}
 
 	router
 		.get('/sightings', _sighting)
+		.get('/sightings/:id', _sighting)
 		.get('/sightings/save', _save)
 	;
 

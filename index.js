@@ -18,6 +18,7 @@ if (!fs.existsSync(upload_path)) {
 	}
 }
 fs.writeFileSync(path.join(__dirname, 'config', 'absolute-path.json'), JSON.stringify({path: upload_path}));
+
 // start up the application
 var app = express();
 
@@ -29,7 +30,8 @@ var Router = express.Router();
 var router = require('./routes/index')(Router);
 app.use('/', router);
 
-app.use(serveStatic(path.join(__dirname, '/views/static')));
+app.use('/', serveStatic(path.join(__dirname, '/views/static')));
+app.use('/img', serveStatic(path.join(__dirname, '/uploads')));
 
 app.listen(3000, function () {
 	console.log("listening on port: 3000");

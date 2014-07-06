@@ -1,7 +1,18 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
+	db,
+	sightingSchema,
+	Sighting;
 
-var sighting = new Schema({
+mongoose.connect('mongodb://localhost/squid');
+
+db = mongoose.connection;
+db.on("error", function (err) {
+	throw err;
+});
+
+sightingSchema = new Schema({
+	imageFilePath: String,
 	date: {type: Date, default: Date.now },
 	location: {
 		latitude: Number,
@@ -10,4 +21,6 @@ var sighting = new Schema({
 	tags: [Schema.Types.Mixed]
 });
 
-module.exports = sighting;
+Sighting = mongoose.model('Sighting', sightingSchema);
+
+module.exports = Sighting;
