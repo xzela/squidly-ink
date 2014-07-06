@@ -1,0 +1,8 @@
+{
+	"google": {
+		"maps": {
+			"key": "GOOGLE-API-KEY-HERE"
+		}
+	},
+	"uploadPath": "./uploads"
+}
