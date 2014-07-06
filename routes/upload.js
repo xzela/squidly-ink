@@ -1,5 +1,17 @@
 module.exports = function (router) {
 
+	function __convert(deg, min, sec) {
+		var azi;
+		if (deg < 0) {
+			azi = -1.0 * deg + 1.0 * min / 60.0 + 1.0 * sec / 3600.0;
+			return -1.0 * azi;
+		} else {
+			azi = 1.0 * deg + 1.0 * min / 60.0 + 1.0 * sec / 3600.0;
+			return azi;
+		}
+	}
+
+
 	function _upload(requst, response) {
 		if (request.mothod == 'GET') {
 			response.render('upload', {});
@@ -31,8 +43,8 @@ module.exports = function (router) {
 						}
 						console.dir(data);
 						if (data.gps) {
-							var lat = convert(data.gps.GPSLatitude[0], data.gps.GPSLatitude[1], data.gps.GPSLatitude[2]);
-							var lon = convert(data.gps.GPSLongitude[0], data.gps.GPSLongitude[1], data.gps.GPSLongitude[2]);
+							var lat = __convert(data.gps.GPSLatitude[0], data.gps.GPSLatitude[1], data.gps.GPSLatitude[2]);
+							var lon = __convert(data.gps.GPSLongitude[0], data.gps.GPSLongitude[1], data.gps.GPSLongitude[2]);
 							if (data.gps.GPSLongitudeRef === 'W') {
 								lon = lon * -1;
 							}
