@@ -1,3 +1,10 @@
+var exif = require('exif'),
+	fs = require('fs'),
+	path = require('path'),
+	config = require('../config/config.json'),
+	absoluteUploadPath = require('../config/absolute-path.json'),
+	multiparty = require('multiparty');
+
 module.exports = function (router) {
 
 	function __convert(deg, min, sec) {
@@ -12,23 +19,24 @@ module.exports = function (router) {
 	}
 
 
-	function _upload(requst, response) {
-		if (request.mothod == 'GET') {
+	function _upload(request, response) {
+		if (request.method == 'GET') {
 			response.render('upload', {});
 		} else {
-
+			console.log("uploading....");
 			var form = new multiparty.Form();
-			var dest = path.join(__dirname, 'files');
+			var dest = absoluteUploadPath.path;
 
 			form.on('error', function (err) {
 				throw err;
 			});
 
 			form.on('close', function () {
-				res.send('file uploaded');
+				response.send('file uploaded');
 			});
 
 			form.on("file", function (name, file) {
+				console.log("uploading file....");
 				var new_file = path.join(dest, file.originalFilename);
 				fs.rename(file.path, new_file, function (err) {
 					if (err) {
@@ -56,6 +64,8 @@ module.exports = function (router) {
 					});
 				});
 			});
+
+			form.parse(request);
 		}
 	}
 
@@ -65,5 +75,4 @@ module.exports = function (router) {
 	;
 
 	return router;
-
 };
