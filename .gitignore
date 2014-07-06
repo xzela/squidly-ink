@@ -28,3 +28,4 @@ config/config.json
 
 .DS_Store
 uploads
+config/absolute-path.json
