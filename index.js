@@ -10,63 +10,73 @@ var app = express();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+
+// load up the main router!
+var Router = express.Router();
+var router = require('./routes/index')(Router);
+app.use('/', router);
+
 app.use(serveStatic(path.join(__dirname, '/views/static')));
 
-app.get('/', function (req, res) {
-	res.render('index', {});
+// app.get('/', function (req, res) {
+// 	res.render('index', {});
+// });
+
+// app.get('/upload', function (req, res) {
+// 	res.render('upload', {});
+// });
+
+// app.get('/map', function (req, res) {
+// 	res.render('map', {apiKey: config.google.maps.key});
+// });
+
+// app.post('/upload', function (req, res) {
+// 	var form = new multiparty.Form();
+// 	var dest = path.join(__dirname, 'files');
+
+// 	form.on('error', function (err) {
+// 		throw err;
+// 	});
+
+// 	form.on('close', function () {
+// 		res.send('file uploaded');
+// 	});
+
+// 	form.on("file", function (name, file) {
+// 		var new_file = path.join(dest, file.originalFilename);
+// 		fs.rename(file.path, new_file, function (err) {
+// 			if (err) {
+// 				throw err;
+// 			}
+// 			console.log('file has been moved: ' + file.path + ' -> ' + new_file);
+// 			new exif.ExifImage({
+// 				image: new_file
+// 			}, function (err, data) {
+// 				if (err) {
+// 					throw err;
+// 				}
+// 				console.dir(data);
+// 				if (data.gps) {
+// 					var lat = convert(data.gps.GPSLatitude[0], data.gps.GPSLatitude[1], data.gps.GPSLatitude[2]);
+// 					var lon = convert(data.gps.GPSLongitude[0], data.gps.GPSLongitude[1], data.gps.GPSLongitude[2]);
+// 					if (data.gps.GPSLongitudeRef === 'W') {
+// 						lon = lon * -1;
+// 					}
+// 					console.log('GPSLatitude', lat);
+// 					console.log('GPSLongitude', lon);
+// 				} else {
+// 					console.log("couldn't locate GPS data from image");
+// 				}
+// 			});
+// 		});
+// 	});
+
+// 	form.parse(req);
+// });
+
+app.listen(3000, function () {
+	console.log("listening on port: 3000");
 });
-
-app.get('/upload', function (req, res) {
-	res.render('upload', {});
-});
-
-app.get('/map', function (req, res) {
-	res.render('map', {apiKey: config.google.maps.key});
-});
-
-app.post('/upload', function (req, res) {
-	var form = new multiparty.Form();
-	var dest = path.join(__dirname, 'files');
-
-	form.on('error', function (err) {
-		throw err;
-	});
-
-	form.on('close', function () {
-		res.send('file uploaded');
-	});
-
-	form.on("file", function (name, file) {
-		var new_file = path.join(dest, file.originalFilename);
-		fs.rename(file.path, new_file, function (err) {
-			if (err) {
-				throw err;
-			}
-			console.log('file has been moved: ' + file.path + ' -> ' + new_file);
-			new exif.ExifImage({
-				image: new_file
-			}, function (err, data) {
-				if (err) {
-					throw err;
-				}
-				console.dir(data);
-				if (data.gps) {
-					var lat = convert(data.gps.GPSLatitude[0], data.gps.GPSLatitude[1], data.gps.GPSLatitude[2]);
-					var lon = convert(data.gps.GPSLongitude[0], data.gps.GPSLongitude[1], data.gps.GPSLongitude[2]);
-					if (data.gps.GPSLongitudeRef === 'W') {
-						lon = lon * -1;
-					}
-					console.log('GPSLatitude', lat);
-					console.log('GPSLongitude', lon);
-				}
-			});
-		});
-	});
-
-	form.parse(req);
-});
-
-app.listen(3000);
 
 
 function convert(deg, min, sec) {
