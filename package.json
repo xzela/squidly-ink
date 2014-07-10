@@ -1,5 +1,5 @@
 {
-  "name": "that-squid-thing",
+  "name": "squidly-ink",
   "version": "0.0.1",
   "description": "a location based web app to rack that squid thing",
   "main": "index.js",
@@ -8,22 +8,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/xzela/that-squid-thing.git"
+    "url": "https://github.com/xzela/squidly-ink.git"
   },
   "author": "Zeph LaFassett",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xzela/that-squid-thing/issues"
+    "url": "https://github.com/xzela/squidly-ink/issues"
   },
-  "homepage": "https://github.com/xzela/that-squid-thing",
+  "homepage": "https://github.com/xzela/squidly-ink",
   "dependencies": {
-    "exif": "^0.4.0",
-    "express": "4.4.x",
+    "exif": "0.4.x",
+    "express": "4.5.x",
     "gm": "^1.16.0",
     "jade": "1.3.x",
-    "mongoose": "^3.8.12",
+    "log4js": "0.6.x",
+    "mongoose": "3.x.x",
     "multiparty": "3.2.x",
-    "node-uuid": "^1.4.1",
-    "serve-static": "^1.2.3"
+    "node-uuid": "1.x.x",
+    "serve-static": "1.2.x"
   }
 }
