@@ -2,7 +2,8 @@ var express = require('express'),
 	fs = require('fs'),
 	config = require('./config/config.json'),
 	path = require('path'),
-	serveStatic = require('serve-static');
+	serveStatic = require('serve-static'),
+	logger = require('./lib/util/log').getLogger(__filename);
 
 // check to see if the uploads directory exists.
 var upload_path = path.join(__dirname, config.uploadPath);
@@ -34,5 +35,5 @@ app.use('/', serveStatic(path.join(__dirname, '/views/static')));
 app.use('/img', serveStatic(path.join(__dirname, '/uploads')));
 
 app.listen(3000, function () {
-	console.log("listening on port: 3000");
+	logger.info("listening on port: 3000");
 });
