@@ -26,7 +26,7 @@ module.exports = function (router) {
 			});
 
 			form.on("file", function (name, file) {
-				uploader.moveFile(dest, file, uploader.parseExif);
+				console.log(uploader.moveFile(dest, file, uploader.parseExif));
 				// var sight = new Sighting({
 				// 	imageRelPath: path.join('img', file.originalFilename),
 				// 	imageFilePath: new_file,
