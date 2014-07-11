@@ -1,23 +1,15 @@
 var express = require('express'),
-	fs = require('fs'),
-	config = require('./config/config.json'),
-	path = require('path'),
 	serveStatic = require('serve-static'),
-	logger = require('./lib/util/log').getLogger(__filename);
+	fs = require('fs'),
+	path = require('path'),
+	util = require('./lib/util/util'),
+	logger = require('./lib/util/log').getLogger(__filename),
+	config = require('./config/config.json');
+
 
 // check to see if the uploads directory exists.
-var upload_path = path.join(__dirname, config.uploadPath);
-if (!fs.existsSync(upload_path)) {
-	try {
-		fs.mkdirSync(upload_path);
-	} catch (e) {
-		throw e;
-	}
-} else {
-	if (!fs.lstatSync(upload_path).isDirectory()) {
-		throw new Error("the upload path is not a directory!");
-	}
-}
+var upload_path = path.join(config.uploadPath);
+util.checkOrCreatePath(upload_path);
 fs.writeFileSync(path.join(__dirname, 'config', 'absolute-path.json'), JSON.stringify({path: upload_path}));
 
 // start up the application
