@@ -25,16 +25,17 @@ module.exports = function (router) {
 
 			form.on("file", function (name, file) {
 				uploader.moveFile(dest, file, function (fileObj) {
-					var location = uploader.parseExif(fileObj.realPath);
-					var sight = new Sighting({
-						imageRelPath: fileObj.imageRelPath,
-						imageFilePath: fileObj.realPath,
-						location: location
-					});
-					sight.save(function (err, data) {
-						if (err) {
-							throw err;
-						}
+					uploader.parseExif(fileObj.realPath, function (location) {
+						var sight = new Sighting({
+							imageRelPath: fileObj.imageRelPath,
+							imageFilePath: fileObj.realPath,
+							location: location
+						});
+						sight.save(function (err, data) {
+							if (err) {
+								throw err;
+							}
+						});
 					});
 				});
 			});
