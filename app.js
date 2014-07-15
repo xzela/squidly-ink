@@ -10,7 +10,6 @@ var express = require('express'),
 // check to see if the uploads directory exists.
 var upload_path = path.join(config.uploadPath);
 util.checkOrCreatePath(upload_path);
-fs.writeFileSync(path.join(__dirname, 'config', 'absolute-path.json'), JSON.stringify({path: upload_path}));
 
 // start up the application
 var app = express();
