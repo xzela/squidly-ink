@@ -14,7 +14,6 @@ module.exports = function (router) {
 			response.render('upload', {});
 		} else {
 			var form = new multiparty.Form();
-			var dest = uploader.createUTCDir();
 			form.on('error', function (err) {
 				throw err;
 			});
@@ -24,7 +23,7 @@ module.exports = function (router) {
 			});
 
 			form.on("file", function (name, file) {
-				uploader.moveFile(dest, file, function (fileObj) {
+				uploader.uploadFile(file, function (fileObj) {
 					uploader.parseExif(fileObj.realPath, function (location) {
 						var sight = new Sighting({
 							imageRelPath: fileObj.imageRelPath,
