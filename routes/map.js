@@ -11,7 +11,7 @@ module.exports = function (router) {
 			if (err) {
 				throw err;
 			}
-			data = data || {};
+			data = data || {location: {latitude: 37.762, longitude: -122.4152}};
 			response.render('map', {
 				apiKey: config.google.maps.key,
 				data: data

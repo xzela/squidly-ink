@@ -23,8 +23,44 @@ block content
 			var data = !{JSON.stringify(data)};
 			var contentString = "<div><img src='" + data.imageRelPath + "' width='100px' height='100px' /> </div>";
 			var infowindow = new google.maps.InfoWindow({
-					content: contentString
+				content: contentString
+			});
+
+			function loadMore(map) {
+				$.ajax({
+					url: '/sightings/near',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						max: 0.001,
+						lat: map.getCenter().lat(),
+						lng: map.getCenter().lng()
+					},
+					error: function (xhr, status, err) {
+						console.log(status);
+					},
+					success: function (data, status, xhr) {
+						var marker, i;
+						for (i = 0; i < data.length; i++) {
+							console.log(data[i]);
+							marker = new google.maps.Marker({
+								position: new google.maps.LatLng(data[i].geoLocation.coordinates[0], data[i].geoLocation.coordinates[1]),
+								map: map
+							});
+							google.maps.event.addListener(marker, 'click', (function (marker, i) {
+								return function () {
+								var contentString = "<div><img src='" + data[i].imageRelPath + "' width='100px' height='100px' /> </div>";
+									infowindow = new google.maps.InfoWindow({
+										content: contentString
+									});
+									infowindow.open(map, marker);
+								}
+							})(marker, i));
+						}
+
+					}
 				});
+			}
 
 			function _success(pos) {
 				if (data.location) {
@@ -44,10 +80,20 @@ block content
 					map: map,
 					title: "Hello World!"
 				});
-				google.maps.event.addListener(marker, 'click', function () {
+				console.log(map.getCenter().lng());
+				google.maps.event.addListener(marker, 'click', function (evnt) {
 					infowindow.open(map, marker);
 				});
+				// https://stackoverflow.com/questions/6910847/get-boundaries-longitude-and-latitude-from-current-zoom-google-maps
+				google.maps.event.addListener(map, 'idle', function (evnt) {
+					var bounds = map.getBounds();
+					console.log(bounds.getNorthEast().lat());
+					console.log(bounds.getSouthWest().lat());
+					loadMore(map);
+
+				});
 			}
+
 			function _err(err) {
 				console.log(err);
 			}
