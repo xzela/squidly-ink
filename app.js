@@ -1,4 +1,5 @@
 var express = require('express'),
+	bodyParser = require('body-parser'),
 	serveStatic = require('serve-static'),
 	fs = require('fs'),
 	path = require('path'),
@@ -16,6 +17,11 @@ var app = express();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 
 // load up the main router!
 var Router = express.Router();
