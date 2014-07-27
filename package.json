@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/xzela/squidly-ink",
   "dependencies": {
+    "body-parser": "1.5.x",
     "exif": "0.4.x",
     "express": "4.6.x",
     "gm": "1.x.x",
