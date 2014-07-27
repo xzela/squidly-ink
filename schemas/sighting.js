@@ -19,6 +19,10 @@ sightingSchema = new Schema({
 		latitude: Number,
 		longitude: Number,
 	},
+	geoLocation: {
+		'type': {type: String},
+		coordinates: [Number]
+	},
 	tags: [Schema.Types.Mixed]
 });
 

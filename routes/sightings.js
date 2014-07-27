@@ -1,4 +1,5 @@
-var Sighting = require('../schemas/sighting');
+var logger = require('../lib/util/log').getLogger(__filename),
+	Sighting = require('../schemas/sighting');
 
 module.exports = function (router) {
 
@@ -7,8 +8,13 @@ module.exports = function (router) {
 			location: {
 				latitude: Math.random(),
 				longitude: Math.random()
+			},
+			geoLocation: {
+				type: 'Point',
+				coordinates: [Math.random(), Math.random()]
 			}
 		});
+		logger.error(sight);
 		sight.save(function (err, data) {
 			if (err) {
 				throw err;
@@ -35,8 +41,9 @@ module.exports = function (router) {
 
 	router
 		.get('/sightings', _sighting)
-		.get('/sightings/:id', _sighting)
 		.get('/sightings/save', _save)
+		.get('/sightings/id/:id', _sighting)
+
 	;
 
 	return router;

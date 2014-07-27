@@ -28,7 +28,11 @@ module.exports = function (router) {
 						var sight = new Sighting({
 							imageRelPath: fileObj.imageRelPath,
 							imageFilePath: fileObj.realPath,
-							location: location
+							location: location,
+							geoLocation: {
+								type: 'Point',
+								coordinates: [location.latitude, location.longitude]
+							}
 						});
 						sight.save(function (err, data) {
 							if (err) {

@@ -17,17 +17,22 @@ block content
 
 
 	script(src="https://maps.googleapis.com/maps/api/js?key=#{apiKey}")
+
 	script(type="text/javascript").
 		function init() {
-
-			var contentString = "<div><img src='#{data.imageRelPath}' width='100px' height='100px' /> </div>";
+			var data = !{JSON.stringify(data)};
+			var contentString = "<div><img src='" + data.imageRelPath + "' width='100px' height='100px' /> </div>";
 			var infowindow = new google.maps.InfoWindow({
 					content: contentString
 				});
 
 			function _success(pos) {
-				// var myLat = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-				var myLat = new google.maps.LatLng(#{data.location.latitude}, #{data.location.longitude});
+				if (data.location) {
+					var myLat = new google.maps.LatLng(data.location.latitude, data.location.longitude);
+				} else {
+					var myLat = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+				}
+
 				console.dir(pos);
 				var mapOptions = {
 					center: myLat,
